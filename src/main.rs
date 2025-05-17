@@ -4,13 +4,17 @@ use rltk::{GameState, RGB, Rltk, VirtualKeyCode};
 use specs::prelude::*;
 use std::cmp::{max, min};
 
-use crate::map::TileType;
 
 pub mod components;
 pub mod map;
 pub mod player;
-use crate::map::draw_map;
-use crate::map::new_map;
+pub mod renderer;
+pub mod shapes;
+
+use crate::renderer::draw_map;
+use crate::map::TileType;
+use crate::map::new_map_test;
+use crate::map::new_map_rooms_and_corridors;
 
 struct LeftWalker {}
 
@@ -93,7 +97,7 @@ fn main() -> rltk::BError {
             .with(LeftMover {})
             .build();
     }
-
-    gs.ecs.insert(new_map());
+    gs.ecs.insert(new_map_rooms_and_corridors());
+    //gs.ecs.insert(new_map_test());
     rltk::main_loop(context, gs)
 }
